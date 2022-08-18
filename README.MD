@@ -1,4 +1,4 @@
-# @triko-app/hooks
+# @alejandro.dev/rn-navigation-wrapper
 Provides hooks for triko application
 * [title](#title)
 

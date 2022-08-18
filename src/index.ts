@@ -1,3 +1,3 @@
-import SomeComponent from './SomeComponent'
+export * from './types'
 
-export { SomeComponent }
+export {}
