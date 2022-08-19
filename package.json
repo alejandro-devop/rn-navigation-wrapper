@@ -50,7 +50,15 @@
   },
   "peerDependencies": {
     "react": "^18.0.0",
-    "react-native": "^0.69.4"
+    "react-native": "^0.69.4",
+    "@react-native-community/masked-view": "^0.1.11",
+    "@react-navigation/bottom-tabs": "^6.3.2",
+    "@react-navigation/native": "^6.0.11",
+    "@react-navigation/stack": "^6.2.2",
+    "react-native-gesture-handler": "^2.5.0",
+    "react-native-reanimated": "^2.9.1",
+    "react-native-safe-area-context": "^4.3.1",
+    "react-native-screens": "^3.15.0"
   },
   "jest": {
     "setupFiles": [
@@ -60,5 +68,14 @@
       "<rootDir>/dist/"
     ]
   },
-  "dependencies": {}
+  "dependencies": {
+    "@react-native-community/masked-view": "^0.1.11",
+    "@react-navigation/bottom-tabs": "^6.3.2",
+    "@react-navigation/native": "^6.0.11",
+    "@react-navigation/stack": "^6.2.2",
+    "react-native-gesture-handler": "^2.5.0",
+    "react-native-reanimated": "^2.9.1",
+    "react-native-safe-area-context": "^4.3.1",
+    "react-native-screens": "^3.15.0"
+  }
 }

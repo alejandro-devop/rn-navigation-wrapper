@@ -1,2 +1,4 @@
-import SomeComponent from './SomeComponent';
-export { SomeComponent };
+import NavigationWrapper from './navigation-wrapper';
+export * from './types';
+export {};
+export default NavigationWrapper;

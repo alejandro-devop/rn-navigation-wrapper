@@ -14,5 +14,12 @@ export default {
         }
     ],
     plugins: [typescript({ objectHashIgnoreUnknownHack: true })],
-    external: ['react', 'react-dom']
+    external: [
+        'react',
+        'react-dom',
+        'react-native',
+        '@react-navigation/native',
+        '@react-navigation/stack',
+        '@react-navigation/bottom-tabs'
+    ]
 }
