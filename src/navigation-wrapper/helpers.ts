@@ -41,10 +41,21 @@ export const makeNavigation =
 
         const getScreenMap = (inputScreens: any, overrideLayout?: string): any => {
             return Object.keys(inputScreens).map((currentKey) => {
+                const { component, layout: screenLayout } = inputScreens[currentKey]
+                let componentToUse = inputScreens[currentKey]
+                let layoutToUse = layout
+                if (component) {
+                    componentToUse = component
+                }
+
+                if (screenLayout) {
+                    layoutToUse = screenLayout
+                }
+
                 return {
                     name: currentKey,
-                    component: inputScreens[currentKey] as React.ComponentType,
-                    layout: overrideLayout || layout
+                    component: componentToUse as React.ComponentType,
+                    layout: overrideLayout || layoutToUse
                 }
             })
         }

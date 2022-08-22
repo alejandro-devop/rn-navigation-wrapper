@@ -72,10 +72,24 @@ var makeNavigation = function (navigationConfig) {
         var _b = groups[selectedGroupKey], initialScreen = _b.initialScreen, screens = _b.screens, layout = _b.layout, type = _b.type, stacks = _b.stacks;
         var getScreenMap = function (inputScreens, overrideLayout) {
             return Object.keys(inputScreens).map(function (currentKey) {
+                var _a = inputScreens[currentKey], component = _a.component, screenLayout = _a.layout;
+                var componentToUse = inputScreens[currentKey];
+                var layoutToUse = layout;
+                if (component) {
+                    componentToUse = component;
+                }
+                if (screenLayout) {
+                    layoutToUse = screenLayout;
+                }
+                console.log('Data: ', {
+                    name: currentKey,
+                    component: componentToUse,
+                    layout: overrideLayout || layoutToUse
+                });
                 return {
                     name: currentKey,
-                    component: inputScreens[currentKey],
-                    layout: overrideLayout || layout
+                    component: componentToUse,
+                    layout: overrideLayout || layoutToUse
                 };
             });
         };
