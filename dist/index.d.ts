@@ -1,4 +1,5 @@
 import NavigationWrapper from './navigation-wrapper';
 export * from './types';
-export {};
+import useAppNavigation from './hooks/useAppNavigation';
+export { useAppNavigation };
 export default NavigationWrapper;

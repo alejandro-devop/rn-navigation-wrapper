@@ -8,6 +8,9 @@ interface ScreenRendererProps {
     screen: {
         component: React.ComponentType;
         layout?: string;
+        layoutProps?: {
+            [k: string]: any;
+        };
     };
 }
 /**

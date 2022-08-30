@@ -1,4 +1,5 @@
 import React from 'react'
+import useAppNavigation from '../hooks/useAppNavigation'
 
 interface ScreenRendererProps {
     /** List of the available layouts */
@@ -7,6 +8,7 @@ interface ScreenRendererProps {
     screen: {
         component: React.ComponentType
         layout?: string
+        layoutProps?: { [k: string]: any }
     }
 }
 
@@ -21,17 +23,20 @@ interface ScreenRendererProps {
  */
 const ScreenRenderer: React.FC<ScreenRendererProps> = ({ layouts, screen, ...routeProps }) => {
     const ComponentToRender = screen.component
-    const { layout } = screen
+    const { layout, layoutProps = {} } = screen
     const layoutKey = layout as keyof typeof layouts
     const LayoutToRender = layout ? layouts[layoutKey] : null
-
+    const { goBack } = useAppNavigation()
+    const routeParams = {
+        goBack
+    }
     if (!ComponentToRender) {
         return null
     }
 
     return LayoutToRender ? (
-        <LayoutToRender {...routeProps}>
-            <ComponentToRender {...routeProps} />
+        <LayoutToRender {...routeProps} {...layoutProps}>
+            <ComponentToRender {...routeProps} {...routeParams} />
         </LayoutToRender>
     ) : (
         <ComponentToRender />

@@ -37,7 +37,7 @@ export interface NavigationWrapperProps {
  */
 export type ScreenConfigType =
     | {
-          [key: string]: React.ComponentType
+          [key: string]: React.ComponentType | { component: React.ComponentType; layout?: string }
       }
     | {
           [key: string]: {

@@ -72,7 +72,7 @@ var makeNavigation = function (navigationConfig) {
         var _b = groups[selectedGroupKey], initialScreen = _b.initialScreen, screens = _b.screens, layout = _b.layout, type = _b.type, stacks = _b.stacks;
         var getScreenMap = function (inputScreens, overrideLayout) {
             return Object.keys(inputScreens).map(function (currentKey) {
-                var _a = inputScreens[currentKey], component = _a.component, screenLayout = _a.layout;
+                var _a = inputScreens[currentKey], component = _a.component, screenLayout = _a.layout, layoutProps = _a.layoutProps;
                 var componentToUse = inputScreens[currentKey];
                 var layoutToUse = layout;
                 if (component) {
@@ -81,15 +81,11 @@ var makeNavigation = function (navigationConfig) {
                 if (screenLayout) {
                     layoutToUse = screenLayout;
                 }
-                console.log('Data: ', {
-                    name: currentKey,
-                    component: componentToUse,
-                    layout: overrideLayout || layoutToUse
-                });
                 return {
                     name: currentKey,
                     component: componentToUse,
-                    layout: overrideLayout || layoutToUse
+                    layout: overrideLayout || layoutToUse,
+                    layoutProps: layoutProps
                 };
             });
         };
@@ -110,6 +106,35 @@ var makeNavigation = function (navigationConfig) {
     };
 };
 
+var useAppNavigation = function () {
+    var navigation = native.useNavigation();
+    var currentRoute = native.useRoute();
+    var stateExtractor = function (s) { return s; };
+    var state = native.useNavigationState(stateExtractor);
+    /**
+     * Allows to go to an specific route
+     */
+    var goTo = function (path, state) {
+        navigation.navigate(path, state);
+        // navigation.navigate(path, state)
+    };
+    /**
+     * Allows to go back
+     */
+    var goBack = function () {
+        navigation.goBack();
+    };
+    var activeRoute = state.routes.find(function (r, k) { return k === state.index && Boolean(r); });
+    return {
+        state: state,
+        stateExtractor: stateExtractor,
+        currentRoute: currentRoute,
+        focussedScreen: activeRoute === null || activeRoute === void 0 ? void 0 : activeRoute.name,
+        goTo: goTo,
+        goBack: goBack
+    };
+};
+
 /**
  * Wrapper component to render the screens and wrapped in the layout
  * (If available)
@@ -122,14 +147,18 @@ var makeNavigation = function (navigationConfig) {
 var ScreenRenderer = function (_a) {
     var layouts = _a.layouts, screen = _a.screen, routeProps = __rest(_a, ["layouts", "screen"]);
     var ComponentToRender = screen.component;
-    var layout = screen.layout;
+    var layout = screen.layout, _b = screen.layoutProps, layoutProps = _b === void 0 ? {} : _b;
     var layoutKey = layout;
     var LayoutToRender = layout ? layouts[layoutKey] : null;
+    var goBack = useAppNavigation().goBack;
+    var routeParams = {
+        goBack: goBack
+    };
     if (!ComponentToRender) {
         return null;
     }
-    return LayoutToRender ? (React__default.default.createElement(LayoutToRender, __assign({}, routeProps),
-        React__default.default.createElement(ComponentToRender, __assign({}, routeProps)))) : (React__default.default.createElement(ComponentToRender, null));
+    return LayoutToRender ? (React__default.default.createElement(LayoutToRender, __assign({}, routeProps, layoutProps),
+        React__default.default.createElement(ComponentToRender, __assign({}, routeProps, routeParams)))) : (React__default.default.createElement(ComponentToRender, null));
 };
 
 var Stack = stack.createStackNavigator();
@@ -198,4 +227,5 @@ var NavigationWrapper = function (_a) {
 };
 
 exports.default = NavigationWrapper;
+exports.useAppNavigation = useAppNavigation;
 //# sourceMappingURL=index.js.map
